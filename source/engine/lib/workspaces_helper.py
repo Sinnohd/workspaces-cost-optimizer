@@ -61,7 +61,9 @@ class WorkspacesHelper(object):
             result['optimizationResult'],
             result['bundleType'],
             result['initialMode'],
-            result['newMode'] + '\n'
+            result['newMode'],
+            result['UserName'],
+            result['ComputerName']+ '\n'
         ))
 
         return csv
@@ -81,7 +83,9 @@ class WorkspacesHelper(object):
         optimizationResult: str,
         initialMode: str,
         newMode: str,
-        bundleType: str
+        bundleType: str,
+        UserName: str,
+        ComputerName: str
     }
     '''
     def process_workspace(self, workspace):
@@ -124,7 +128,9 @@ class WorkspacesHelper(object):
             'optimizationResult': optimizationResult['resultCode'],
             'newMode': optimizationResult['newMode'],
             'bundleType': workspaceBundleType,
-            'initialMode': workspaceRunningMode
+            'initialMode': workspaceRunningMode,
+            'UserName': workspace['UserName'],
+            'ComputerName': workspace['ComputerName']
         }
 
     '''

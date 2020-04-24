@@ -74,7 +74,7 @@ class DirectoryReader(object):
             return 0
 
         try: directoryParams['CSV']
-        except: wsCsv = 'WorkspaceID,Billable Hours,Usage Threshold,Change Reported,Bundle Type,Initial Mode,New Mode\n'
+        except: wsCsv = 'WorkspaceID,Billable Hours,Usage Threshold,Change Reported,Bundle Type,Initial Mode,New Mode,User Name,Computer Name\n'
         else: wsCsv = directoryParams['CSV']
 
         try: directoryParams['NextToken']

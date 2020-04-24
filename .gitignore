@@ -9,3 +9,9 @@ __pycache__/
 TESTING.md
 .eggs/
 **.egg-info
+source/certifi*
+source/chardet*
+source/idna*
+source/requests*
+source/urllib3*
+
