@@ -92,6 +92,12 @@ class WorkspacesHelper(object):
         workspaceID = workspace['WorkspaceId']
         log.debug('workspaceID: %s', workspaceID)
 
+        workspaceComputerName = workspace['ComputerName']
+        log.debug('workspaceCompuerName: %s', workspaceComputerName)
+
+        workspaceUserName = workspace['UserName']
+        log.debug('workspaceUserName: %s', workspaceUserName)
+
         workspaceRunningMode = workspace['WorkspaceProperties']['RunningMode']
         log.debug('workspaceRunningMode: %s', workspaceRunningMode)
 
@@ -129,8 +135,8 @@ class WorkspacesHelper(object):
             'newMode': optimizationResult['newMode'],
             'bundleType': workspaceBundleType,
             'initialMode': workspaceRunningMode,
-            'UserName': workspace['UserName'],
-            'ComputerName': workspace['ComputerName']
+            'UserName': workspaceUserName,
+            'ComputerName': workspaceComputerName
         }
 
     '''

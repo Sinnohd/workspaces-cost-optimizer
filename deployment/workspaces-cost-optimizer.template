@@ -431,7 +431,7 @@ Resources:
       TaskRoleArn: !GetAtt CostOptimizerAdminRole.Arn
       ContainerDefinitions:
         - Name: "wco2-container"
-          Image: "898061675696.dkr.ecr.us-east-1.amazonaws.com/wco:2.3"
+          Image: "230116209160.dkr.ecr.eu-central-1.amazonaws.com/wco:2.3"
           Essential: True
           Cpu: 256
 
