@@ -1,4 +1,4 @@
-FROM python:3.8.10
+FROM python:3.8.11
 
 COPY ecs/workspaces_app.py /app/workspaces_app.py
 COPY ecs /app/ecs

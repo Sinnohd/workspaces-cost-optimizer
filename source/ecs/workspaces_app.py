@@ -29,6 +29,7 @@ import time
 import uuid
 import os
 import math
+import datetime
 
 from ecs.directory_reader import DirectoryReader
 from ecs.utils.solution_metrics import send_metrics
@@ -40,9 +41,12 @@ log = logging.getLogger()
 LOG_LEVEL = str(os.getenv('LogLevel', 'INFO'))
 log.setLevel(LOG_LEVEL)
 
-endTime = time.strftime("%Y-%m-%dT%H:%M:%SZ")
-startTime = time.strftime("%Y-%m") + '-01T00:00:00Z'
-lastDay = calendar.monthrange(int(time.strftime("%Y")), int(time.strftime("%m")))[1]
+dateTimeStr = os.getenv('DateTime', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+dateTime = datetime.datetime.strptime(dateTimeStr, '%Y-%m-%d %H:%M:%S')
+dateTimeTuple = dateTime.timetuple()
+endTime = time.strftime("%Y-%m-%dT%H:%M:%SZ", dateTimeTuple)
+startTime = time.strftime("%Y-%m", dateTimeTuple) + '-01T00:00:00Z'
+lastDay = calendar.monthrange(int(time.strftime("%Y",dateTimeTuple)), int(time.strftime("%m",dateTimeTuple)))[1]
 maxRetries = 3
 runUUID = str(uuid.uuid4())
 anonymousDataEndpoint = 'https://metrics.awssolutionsbuilder.com/generic'
@@ -91,7 +95,7 @@ for param in stackParams:
         log.error('No value for stack parameter: %s', param)
         sys.exit()
 
-theDay = int(time.strftime('%d'))
+theDay = int(time.strftime('%d', dateTimeTuple))
 # Determine if we should run end-of-month routine.
 if theDay == int(lastDay):
     stackParams['TestEndOfMonth'] = 'Yes'

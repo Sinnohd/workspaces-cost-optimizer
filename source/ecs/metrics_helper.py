@@ -42,7 +42,8 @@ TIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 NUMBER_OF_DAYS = 5
 START_TIME = 'start_time'
 END_TIME = 'end_time'
-AUTO_STOP_TIMEOUT_HOURS = os.getenv('AutoStopTimeoutHours')
+AUTO_STOP_TIMEOUT_HOURS = os.getenv('AutoStopTimeoutHours', 1)
+WORKSPACE_MAINTENANCE_HOURS = os.getenv('WorkspaceMaintenanceHours', 4)
 
 
 class MetricsHelper(object):
@@ -156,16 +157,13 @@ class MetricsHelper(object):
         log.debug("Calculating user connected hours for workspace {} and user sessions {}".
                   format(workspace, list_user_sessions))
         user_connected_hours = 0
-        maintenance_hours = 0
         if workspace['WorkspaceProperties']['RunningMode'] == ALWAYS_ON:
             idle_time_in_hours = int(AUTO_STOP_TIMEOUT_HOURS)
         else:
             idle_time_in_hours = workspace['WorkspaceProperties']['RunningModeAutoStopTimeoutInMinutes'] / 60
-            maintenance_hours = 4
-
         for session in list_user_sessions:
             # sum the hours of usage per session and add idle time per session
             user_connected_hours = user_connected_hours + len(session) + idle_time_in_hours
-        # add maintenance hours
-        user_connected_hours = user_connected_hours + maintenance_hours
+        # add one-time maintenance hours per month
+        user_connected_hours = user_connected_hours + int(WORKSPACE_MAINTENANCE_HOURS)
         return user_connected_hours

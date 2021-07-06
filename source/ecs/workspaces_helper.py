@@ -98,7 +98,10 @@ class WorkspacesHelper(object):
         workspaceID = workspace['WorkspaceId']
         log.debug('workspaceID: %s', workspaceID)
 
-        workspaceComputerName = workspace['ComputerName']
+        if workspace.get('ComputerName'):
+            workspaceComputerName = workspace['ComputerName']
+        else :
+            workspaceComputerName = "TBD"
         log.debug('workspaceCompuerName: %s', workspaceComputerName)
 
         workspaceUserName = workspace['UserName']
