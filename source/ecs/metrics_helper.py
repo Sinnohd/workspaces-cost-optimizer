@@ -166,4 +166,4 @@ class MetricsHelper(object):
             user_connected_hours = user_connected_hours + len(session) + idle_time_in_hours
         # add one-time maintenance hours per month
         user_connected_hours = user_connected_hours + int(WORKSPACE_MAINTENANCE_HOURS)
-        return user_connected_hours
+        return int(user_connected_hours)
