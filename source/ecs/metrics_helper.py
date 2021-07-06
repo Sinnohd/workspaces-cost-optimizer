@@ -118,7 +118,7 @@ class MetricsHelper(object):
                     MetricName=metric,
                     StartTime=time_range[START_TIME],
                     EndTime=time_range[END_TIME],
-                    Period=300,
+                    Period=3600,
                     Statistics=['Maximum']
                 )
             except Exception as error:
@@ -156,12 +156,16 @@ class MetricsHelper(object):
         log.debug("Calculating user connected hours for workspace {} and user sessions {}".
                   format(workspace, list_user_sessions))
         user_connected_hours = 0
+        maintenance_hours = 0
         if workspace['WorkspaceProperties']['RunningMode'] == ALWAYS_ON:
             idle_time_in_hours = int(AUTO_STOP_TIMEOUT_HOURS)
         else:
             idle_time_in_hours = workspace['WorkspaceProperties']['RunningModeAutoStopTimeoutInMinutes'] / 60
+            maintenance_hours = 4
 
         for session in list_user_sessions:
-            # Divide each session by 12 to convert the 5 min intervals to hour and idle time per session
-            user_connected_hours = user_connected_hours + math.ceil(len(session) / 12) + idle_time_in_hours
+            # sum the hours of usage per session and add idle time per session
+            user_connected_hours = user_connected_hours + len(session) + idle_time_in_hours
+        # add maintenance hours
+        user_connected_hours = user_connected_hours + maintenance_hours
         return user_connected_hours
