@@ -64,7 +64,7 @@ class WorkspacesHelper(object):
             result['initialMode'],
             result['newMode'],
             result['userName'],
-            result['ComputerName'],
+            result['computerName'],
             result['directoryId'],
             ''.join(('"', str(result['tags']), '"')) + '\n'  # Adding quotes to the string to help with csv format
         ))
@@ -89,8 +89,10 @@ class WorkspacesHelper(object):
         initialMode: str,
         newMode: str,
         bundleType: str,
-        UserName: str,
-        ComputerName: str
+        userName: str,
+        computerName: str,
+        directoryId
+        tags: str
     }
     '''
 
@@ -146,7 +148,7 @@ class WorkspacesHelper(object):
             'bundleType': workspaceBundleType,
             'initialMode': workspaceRunningMode,
             'userName': workspace['UserName'],
-            'ComputerName': workspaceComputerName,
+            'computerName': workspaceComputerName,
             'directoryId': workspace['DirectoryId'],
             'tags': tags
         }
